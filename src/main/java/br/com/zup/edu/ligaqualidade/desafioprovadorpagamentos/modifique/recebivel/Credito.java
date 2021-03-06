@@ -13,6 +13,11 @@ public class Credito implements Recebivel {
     private static final BigDecimal DISCOUNT = new BigDecimal(0.05);
     private static final int DAYS = 30;
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final int INDEX_STATUS = 0;
+    private static final int INDEX_TRANSACAO_VALOR = 1;
+    private static final int INDEX_VALOR_APOS_TAXA = 2;
+    private static final int INDEX_DATA_RECEBIMENTO = 3;
+    private static final int INDEX_ID_RECEBIVEL = 4;
 
     public final DadosTransacao transacao;
 
@@ -22,12 +27,13 @@ public class Credito implements Recebivel {
 
     @Override
     public String[] processRecebivel() {
-        String[] recebivel = new String[4];
+        String[] recebivel = new String[5];
 
-        recebivel[0] = STATUS;
-        recebivel[1] = transacao.valor.toString();
-        recebivel[2] = calculateDiscount().toString();
-        recebivel[3] = LocalDate.now().plusDays(DAYS).format(dateFormatter);
+        recebivel[INDEX_STATUS] = STATUS;
+        recebivel[INDEX_TRANSACAO_VALOR] = transacao.valor.toString();
+        recebivel[INDEX_VALOR_APOS_TAXA] = calculateDiscount().toString();
+        recebivel[INDEX_DATA_RECEBIMENTO] = LocalDate.now().plusDays(DAYS).format(dateFormatter);
+        recebivel[INDEX_ID_RECEBIVEL] = String.valueOf(transacao.id);
 
         return recebivel;
     }
