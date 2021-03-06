@@ -2,18 +2,20 @@ package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique;
 
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel.Recebivel;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel.RecebivelBuilder;
+import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel.RecebivelHandler;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosRecebimentoAdiantado;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosTransacao;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Solucao {
 
     private static final TransacaoParser transactionParser = new TransacaoParser();
     private static final AdiantamentoParser adiantamentoParser = new AdiantamentoParser();
+
     private static final RecebivelBuilder recebivelBuilder = new RecebivelBuilder();
+    private static final RecebivelHandler recebivelHandler = new RecebivelHandler();
 
     /**
      * @param infoTransacoes    dados das transações. A String está formatada da seguinte maneira:
@@ -44,10 +46,6 @@ public class Solucao {
 
         List<Recebivel> recebiveis = recebivelBuilder.buildRecebiveis(transacaos);
 
-        return recebiveis.stream()
-                .map(re -> re.processRecebivel()).collect(Collectors.toList());
+        return recebivelHandler.processRecebiveis(recebiveis, adiantamentos);
     }
-
-
-
 }
