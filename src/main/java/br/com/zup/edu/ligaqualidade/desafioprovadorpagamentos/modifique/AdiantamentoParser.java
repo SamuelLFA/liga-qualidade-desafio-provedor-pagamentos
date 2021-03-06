@@ -15,8 +15,8 @@ public class AdiantamentoParser {
     private static final String SPLIT_CHAR = ",";
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private static final int INDEX_ADIANTAMENTO_ID_TRANSACAO = 0;
-    private static final int INDEX_ADIANTAMENTO_TAXA = 1;
+    private static final int INDEX_ID_TRANSACAO = 0;
+    private static final int INDEX_TAXA = 1;
 
     public List<DadosRecebimentoAdiantado> parseAdiantamentos(List<String> infoAdiantamentos) {
         return infoAdiantamentos.stream()
@@ -27,8 +27,8 @@ public class AdiantamentoParser {
     private DadosRecebimentoAdiantado parseAdiantamento(String adiantamento) {
         String dados[] = adiantamento.split(SPLIT_CHAR);
         return new DadosRecebimentoAdiantado(
-                Integer.parseInt(dados[INDEX_ADIANTAMENTO_ID_TRANSACAO]),
-                new BigDecimal(dados[INDEX_ADIANTAMENTO_TAXA])
+                Integer.parseInt(dados[INDEX_ID_TRANSACAO]),
+                new BigDecimal(dados[INDEX_TAXA])
         );
     }
 }
