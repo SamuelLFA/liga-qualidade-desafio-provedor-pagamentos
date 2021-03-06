@@ -7,6 +7,8 @@ import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.MetodoPagam
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TransacaoParser {
 
@@ -23,8 +25,13 @@ public class TransacaoParser {
     private static final int INDEX_ADIANTAMENTO_ID_TRANSACAO = 0;
     private static final int INDEX_ADIANTAMENTO_TAXA = 1;
 
+    public List<DadosTransacao> parseTransactions(List<String> infoTransacoes) {
+        return infoTransacoes.stream().
+                map(transacao -> parseTransaction(transacao))
+                .collect(Collectors.toList());
+    }
 
-    public DadosTransacao parseTransaction(String transacao) {
+    private DadosTransacao parseTransaction(String transacao) {
         String dados[] = transacao.split(SPLIT_CHAR);
 
         return new DadosTransacao(
@@ -35,14 +42,6 @@ public class TransacaoParser {
                 LocalDate.parse(dados[INDEX_TRANSACAO_VALIDADE], dateFormatter),
                 Integer.parseInt(dados[INDEX_TRANSACAO_CVV]),
                 Integer.parseInt(dados[INDEX_TRANSACAO_ID_TRANSACAO])
-        );
-    }
-
-    public DadosRecebimentoAdiantado parseAdiantamento(String adiantamento) {
-        String dados[] = adiantamento.split(SPLIT_CHAR);
-        return new DadosRecebimentoAdiantado(
-                Integer.parseInt(dados[INDEX_ADIANTAMENTO_ID_TRANSACAO]),
-                new BigDecimal(dados[INDEX_ADIANTAMENTO_TAXA])
         );
     }
 }
