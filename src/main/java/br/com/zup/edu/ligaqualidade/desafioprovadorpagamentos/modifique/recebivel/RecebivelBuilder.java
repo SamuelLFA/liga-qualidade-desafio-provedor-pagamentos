@@ -1,4 +1,4 @@
-package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique;
+package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel;
 
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosTransacao;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.MetodoPagamento;

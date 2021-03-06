@@ -1,4 +1,4 @@
-package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique;
+package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel;
 
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosTransacao;
 
@@ -7,16 +7,15 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Credito implements Recebivel {
+public class Debito implements Recebivel {
 
-    private static final String STATUS = "aguardando_pagamento";
-    private static final BigDecimal DISCOUNT = new BigDecimal(0.05);
-    private static final int DAYS = 30;
+    private static final String STATUS = "pago";
+    private static final BigDecimal DISCOUNT = new BigDecimal(0.03);
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public final DadosTransacao transacao;
 
-    public Credito(DadosTransacao transacao) {
+    public Debito(DadosTransacao transacao){
         this.transacao = transacao;
     }
 
@@ -27,7 +26,7 @@ public class Credito implements Recebivel {
         recebivel[0] = STATUS;
         recebivel[1] = transacao.valor.toString();
         recebivel[2] = calculateDiscount().toString();
-        recebivel[3] = LocalDate.now().plusDays(DAYS).format(dateFormatter);
+        recebivel[3] = LocalDate.now().format(dateFormatter);
 
         return recebivel;
     }
