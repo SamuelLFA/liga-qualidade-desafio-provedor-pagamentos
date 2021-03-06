@@ -1,5 +1,7 @@
 package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique;
 
+import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel.Recebivel;
+import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique.recebivel.RecebivelBuilder;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosRecebimentoAdiantado;
 import br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.pronto.DadosTransacao;
 
@@ -9,7 +11,8 @@ import java.util.stream.Collectors;
 
 public class Solucao {
 
-    private static final TransacaoParser parser = new TransacaoParser();
+    private static final TransacaoParser transactionParser = new TransacaoParser();
+    private static final AdiantamentoParser adiantamentoParser = new AdiantamentoParser();
     private static final RecebivelBuilder recebivelBuilder = new RecebivelBuilder();
 
     /**
@@ -36,8 +39,8 @@ public class Solucao {
      * É esperado que o retorno respeite a ordem de recebimento
      */
     public static List<String[]> executa(List<String> infoTransacoes, List<String> infoAdiantamentos) {
-        List<DadosTransacao> transacaos = parseTransactions(infoTransacoes);
-        List<DadosRecebimentoAdiantado> adiantamentos = parseAdiantamentos(infoAdiantamentos);
+        List<DadosTransacao> transacaos = transactionParser.parseTransactions(infoTransacoes);
+        List<DadosRecebimentoAdiantado> adiantamentos = adiantamentoParser.parseAdiantamentos(infoAdiantamentos);
 
         List<Recebivel> recebiveis = recebivelBuilder.buildRecebiveis(transacaos);
 
@@ -45,16 +48,6 @@ public class Solucao {
                 .map(re -> re.processRecebivel()).collect(Collectors.toList());
     }
 
-    private static List<DadosRecebimentoAdiantado> parseAdiantamentos(List<String> infoAdiantamentos) {
-        return infoAdiantamentos.stream()
-                .map(adiantamento -> parser.parseAdiantamento(adiantamento))
-                .collect(Collectors.toList());
-    }
 
-    private static List<DadosTransacao> parseTransactions(List<String> infoTransacoes) {
-        return infoTransacoes.stream().
-                map(transacao -> parser.parseTransaction(transacao))
-                .collect(Collectors.toList());
-    }
 
 }
